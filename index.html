@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Santos, Harvey Kent I. --- Portfolio</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root[data-theme="dark"] {
+      --bg-midnight: #090b16;
+      --bg-surface: #0f1326;
+      --bg-panel: rgba(19, 23, 44, 0.7);
+      --bg-panel-solid: #13172c;
+      --border-subtle: rgba(244, 114, 182, 0.16);
+      --border-hover: rgba(255, 158, 187, 0.45);
+      
+      --sakura-pink: #ff9ebb;
+      --sakura-glow: #f472b6;
+      --shrine-crimson: #be123c;
+      --shrine-gold: #ecc06c;
+      --moon-cyan: #93c5fd;
+      --plum-ink: #1e1026;
+
+      /* Typography */
+      --text-main: #f8f7fb;
+      --text-body: #cfc9dd;
+      --text-dim: #7f7992;
+      --canvas-blend: screen;
+    }
+
+    :root[data-theme="light"] {
+      --bg-midnight: #f8f6f8;
+      --bg-surface: #efe9f0;
+      --bg-panel: rgba(255, 255, 255, 0.85);
+      --bg-panel-solid: #ffffff;
+      --border-subtle: rgba(190, 18, 60, 0.15);
+      --border-hover: rgba(190, 18, 60, 0.4);
+      
+      --sakura-pink: #d94676;
+      --sakura-glow: #be123c;
+      --shrine-crimson: #9e1a27;
+      --shrine-gold: #b47a1f;
+      --moon-cyan: #2563eb;
+      --plum-ink: #f0e6ed;
+
+      --text-main: #191424;
+      --text-body: #3c334a;
+      --text-dim: #7a6f8a;
+      --canvas-blend: multiply;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-midnight);
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      min-height: 100vh;
+      line-height: 1.65;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      position: relative;
+    }
+
+    #gatekeeper-curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #000000;
+      color: #eae7f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
+    }
+
+    #gatekeeper-curtain.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .gatekeeper-box {
+      max-width: 680px;
+      width: 100%;
+      height: 75vh;
+      background: #09070f;
+      border: 1px solid rgba(255, 158, 187, 0.25);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    }
+
+    .gatekeeper-header {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--sakura-pink);
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gatekeeper-scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      margin: 1.5rem 0;
+      padding-right: 0.8rem;
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: #b5aeca;
+    }
+
+    .gatekeeper-scroll-area::-webkit-scrollbar {
+      width: 4px;
+    }
+    .gatekeeper-scroll-area::-webkit-scrollbar-thumb {
+      background: var(--shrine-crimson);
+      border-radius: 4px;
+    }
+
+    .gatekeeper-footer {
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .scroll-hint {
+      font-size: 0.72rem;
+      color: #7b738e;
+    }
+
+    .btn-enter {
+      background: var(--shrine-crimson);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.65rem 1.4rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .btn-enter.ready {
+      opacity: 1;
+      pointer-events: auto;
+      box-shadow: 0 0 20px rgba(190, 18, 60, 0.6);
+    }
+
+    .btn-enter.ready:hover {
+      background: #dc2626;
+      transform: translateY(-2px);
+    }
+
+    #ambient-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      padding: 1.1rem 2.5rem;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(9, 11, 22, 0.82);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    :root[data-theme="light"] .nav {
+      background: rgba(248, 246, 248, 0.85);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: right;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text-main);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--sakura-pink);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--sakura-pink);
+    }
+
+    .viewport-content {
+      position: relative;
+      z-index: 10;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    .section-kicker {
+      font-size: 0.75rem;
+      color: var(--shrine-gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-heading {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--text-main);
+    }
+
+    .shrine-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .shrine-panel:hover {
+      border-color: var(--border-hover);
+    }
+
+    .bento-overview {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      grid-template-rows: 230px 230px;
+      gap: 1.25rem;
+      margin-bottom: 4.5rem;
+    }
+
+	.bento-portrait {
+	  grid-row: span 2;
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center; /* Centers everything horizontally at the top */
+	  text-align: center;   /* Centers the text nicely underneath */
+	  padding: 2.2rem;
+	  gap: 1.5rem;
+	}
+
+	.portrait-img {
+	  width: 200px;  /* Adjust size here (e.g., 80px or 100px) */
+	  height: 200px;
+	  aspect-ratio: 1 / 1;
+	  object-fit: cover;
+	  border-radius: 12px; /* Change to 50% if you want it to be a circle */
+	}
+
+    .portrait-gradient {
+		  position: absolute;
+		  inset: 0;
+		  background: linear-gradient(180deg, rgba(9,11,22,0.1) 0%, rgba(9,11,22,0.7) 60%, rgba(9,11,22,0.96) 100%);
+		  z-index: 2;
+    }
+
+    :root[data-theme="light"] .portrait-gradient {
+      background: linear-gradient(180deg, rgba(248,246,248,0.1) 0%, rgba(248,246,248,0.7) 60%, rgba(248,246,248,0.96) 100%);
+    }
+
+    .portrait-content {
+      position: relative;
+      z-index: 3;
+    }
+
+    .tag-pill {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      background: rgba(190, 18, 60, 0.15);
+      border: 1px solid var(--shrine-crimson);
+      color: var(--sakura-pink);
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-name {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-subtitle {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    .bento-bio {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .bio-body {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--text-body);
+    }
+
+    .bio-body strong {
+      color: var(--sakura-pink);
+      font-weight: 600;
+    }
+
+    .bento-socials {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+	
+    .bento-body {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--text-body);
+    }
+
+    .social-matrix {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .social-cell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0.85rem;
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.78rem;
+      transition: all 0.2s;
+    }
+
+    :root[data-theme="light"] .social-cell {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    .social-cell:hover {
+      border-color: var(--sakura-pink);
+      color: var(--sakura-pink);
+      transform: translateY(-2px);
+    }
+
+    .email-copy-trigger {
+      cursor: pointer;
+    }
+
+    .section-philosophy {
+      margin-bottom: 5.5rem;
+    }
+
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .philosophy-panel {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+    }
+
+    .philosophy-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--sakura-pink);
+      margin-bottom: 0.75rem;
+    }
+
+    .philosophy-body {
+      font-size: 0.85rem;
+      color: var(--text-body);
+      line-height: 1.75;
+    }
+
+    .section-projects {
+      margin-bottom: 5.5rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .project-card {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 260px;
+    }
+
+    .project-code {
+      font-size: 0.7rem;
+      color: var(--shrine-gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .project-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: var(--text-main);
+    }
+
+    .project-desc {
+      font-size: 0.82rem;
+      color: var(--text-body);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .code-tag {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      color: var(--text-dim);
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1.2rem;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1rem;
+    }
+
+    .proj-link {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--sakura-pink);
+      transition: color 0.2s;
+    }
+
+    .proj-link:hover {
+      color: var(--text-main);
+    }
+
+    .section-gallery {
+	  margin-top: 5.5rem;
+      margin-bottom: 7.5rem;
+    }
+
+    .gallery-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn-latex {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(190, 18, 60, 0.12);
+      border: 1px solid var(--shrine-crimson);
+      color: var(--sakura-pink);
+      text-decoration: none;
+      font-size: 0.78rem;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-latex:hover {
+      background: var(--shrine-crimson);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Swipe Carousel */
+    .gallery-swipe-track {
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 1rem;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .gallery-swipe-track::-webkit-scrollbar {
+      height: 4px;
+    }
+    .gallery-swipe-track::-webkit-scrollbar-thumb {
+      background: var(--shrine-crimson);
+      border-radius: 4px;
+    }
+
+    .gallery-item {
+      flex: 0 0 340px;
+      scroll-snap-align: start;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+	.gallery-img-box {
+		width: 100%;
+		height: 300px;
+		overflow: hidden;
+	}
+
+	.gallery-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+  
+		object-position: center 30%;
+	}
+
+    .gallery-item:hover .gallery-img {
+      transform: scale(1.05);
+    }
+
+    .gallery-caption-box {
+      padding: 1.25rem;
+      flex: 1;
+    }
+
+    .gallery-item-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      color: var(--text-main);
+    }
+
+    .gallery-item-desc {
+      font-size: 0.78rem;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    /* Gallery Text Explanation Placeholder */
+    .gallery-annotation {
+      margin-top: 1.25rem;
+      padding: 1.5rem;
+      border-left: 2px solid var(--shrine-crimson);
+    }
+	
+    #toast-msg {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 10000;
+      background: var(--bg-panel-solid);
+      border: 1px solid var(--sakura-pink);
+      color: var(--text-main);
+      padding: 0.75rem 1.4rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    #toast-msg.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 0;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 860px) {
+      .nav {
+        padding: 1rem 1.25rem;
+      }
+      .nav-links {
+        display: none;
+      }
+      .bento-overview {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 0.5rem;
+      }
+      .bento-overview::-webkit-scrollbar {
+        display: none;
+      }
+      .bento-overview > .shrine-panel {
+        flex: 0 0 85vw;
+        min-height: 380px;
+        scroll-snap-align: center;
+      }
+      .bento-portrait {
+        grid-row: auto;
+      }
+      .philosophy-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <aside id="gatekeeper-curtain">
+    <div class="gatekeeper-box">
+      <div class="gatekeeper-header">
+        <span>🌸 Please read first! 🌸</span>
+        <span style="font-size: 0.75rem; color: #736b85;">Chronicle</span>
+      </div>
+      
+      <div class="gatekeeper-scroll-area" id="gatekeeperScroll">
+        <p style="margin-bottom: 1rem;">
+			Google's services are becoming more untrustworthy. It is time I migrate to different environments and prepare to migrate sensitive data, such as (but not limited to) projects.
+        </p>
+        <p style="margin-bottom: 1rem;">
+            I did my best to code most of this with StackOverflow as my glossary for HTML. I also find GitHub more reliable for server hosting (I've made Minecraft servers with Gitea (local), GitHub (cloud), and my low-end old PC (CachyOS)), so I'd rather not use Google Sites if I have the proper utilities.
+        </p>
+		<p style="margin-bottom: 1rem;">
+			Please understand the current predicament users may experience using Google services. Read more about this <a href="https://www.dexerto.com/entertainment/google-quietly-changes-privacy-policy-so-your-gmail-and-photos-could-be-used-in-targeted-ads-3421462/" target="_blank" rel="noopener noreferrer">Dexerto Article</a>.
+		</p>
+      </div>
+
+      <div class="gatekeeper-footer">
+        <span class="scroll-hint" id="scrollNotice">↓ Scroll to the bottom</span>
+        <button class="btn-enter" id="enterSiteBtn">Enter Portfolio →</button>
+      </div>
+    </div>
+  </aside>
+
+  <canvas id="ambient-canvas"></canvas>
+
+  <header class="nav">
+    <a href="#" class="nav-brand">
+      <span>🌸 Harvey's Portfolio</span>
+      <span style="color: var(--text-dim); font-weight: 400;">// BINDTECH 1-5 CT B</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#about" class="nav-link">Overview</a>
+      <a href="#philosophy" class="nav-link">Philosophy</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#gallery" class="nav-link">Gallery</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="theme-toggle-btn" id="themeToggleBtn">
+        <span id="themeIcon">☼</span> Light
+      </button>
+    </div>
+  </header>
+
+  <main class="viewport-content">
+
+    <section class="bento-overview" id="about">
+
+      <article class="shrine-panel bento-portrait">
+        <img 
+          class="portrait-img" 
+          src="https://imglink.cc/cdn/NqCf6VRUYM.jpg"
+          alt="Personal Portrait"
+        />
+		<div class="portrait-gradient"></div>
+        <div class="portrait-content">
+          <div class="tag-pill">✦ Freshman // Construction Technology</div>
+          <h1 class="hero-name">Harvey Kent I. Santos</h1>
+          <p class="hero-subtitle">1st year BINDTECH Construction Technology Freshman @ Marikina Polytechnic College</p>
+        </div>
+      </article>
+
+      <article class="shrine-panel bento-bio">
+        <div class="section-kicker">✦ Identity</div>
+        <p class="bio-body">
+            1st year BINDTECH Construction Technology student focused on <strong>Mathematics</strong>, <strong>Music</strong>, and <strong>Digital Arts</strong>. Exploring the intersection between Mathematics, arts, and mapping low-end hardware from .aml analysis for system optimisation. Ex-contributor of KQM.
+        </p>
+      </article>
+
+      <article class="shrine-panel bento-socials">
+        <div class="section-kicker">✦ Socials</div>
+        <p class="bio-body">
+			Some links might be updated sooner or later.
+		</p>
+        <div class="social-matrix">
+          <a href="https://github.com/harvey-owo" target="_blank" class="social-cell">
+            <span>GitHub</span>
+            <span>↗</span>
+          </a>
+          <a href="https://gitea.com/betwixtskies/" target="_blank" class="social-cell">
+            <span>Gitea (Personal)</span>
+            <span>↗</span>
+          </a>
+          <a href="https://www.facebook.com/hkhkhkhk47/" target="_blank" class="social-cell">
+            <span>Facebook</span>
+            <span>↗</span>
+          </a>
+          <div class="social-cell email-copy-trigger" data-email="h.k.santos.162008@gmail.com">
+            <span>Email</span>
+            <span>Copy 📋</span>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="section-philosophy" id="philosophy">
+      <div class="section-kicker">✦ Core Principles</div>
+      <h2 class="section-heading">Philosophy</h2>
+
+      <div class="philosophy-grid">
+        <div class="shrine-panel philosophy-panel">
+          <div>
+            <div class="philosophy-title">01 | Purpose</div>
+            <p class="philosophy-body">
+                "Persevere and revere, thou wilt unravel thine life's predestined belvedere. Endure and engineer, thou shalt command thine ambition's utmost frontier."
+            </p>
+          </div>
+        </div>
+
+        <div class="shrine-panel philosophy-panel">
+          <div>
+            <div class="philosophy-title">02 | Optimisation</div>
+            <p class="philosophy-body">
+                MMXXVI is the year when hardware is expected to be fast and high-end. What about our brethren and sistren with inferior devices? What about those with no proper device, relying on mere primitives? Exclusivity is the end of novelty.
+            </p>
+          </div>
+        </div>
+		
+        <div class="shrine-panel philosophy-panel">
+          <div>
+            <div class="philosophy-title">03 | About oneself</div>
+            <p class="philosophy-body">
+                Games are what I play. The names are "Genshin Impact", "Honkai: Star Rail", "Minecraft", and "Clash of Clans", specialised in theorycrafting and data structure, pushing the limits of what people consider deplorable, such as "barch" or off-meta teams/units like using the Guuji in aggravate compositions while clearing endgame content.
+            </p>
+          </div>
+        </div>
+		
+        <div class="shrine-panel philosophy-panel">
+          <div>
+            <div class="philosophy-title">04 | Goals</div>
+            <p class="philosophy-body">
+                I aim not to be superior, but to grow and push boundaries, perhaps creating what's unseen. Anything that limits one heavily (such as Google Sites) will not hinder one's potential. What matters is passion.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="projects">
+      <div class="projects-grid">
+	  
+        <article id="project-guuji" class="shrine-panel project-card">
+          <div>
+            <div class="project-code">PRJ_01 | YEMK</div>
+            <h3 class="project-title">Project Guuji</h3>
+            <p class="project-desc">
+                A foobar2000 CLI skin with a working Linux Environment Emulator, themed after Genshin Impact's <strong>Yae Miko</strong>.
+            </p>
+            <div class="project-tags">
+              <span class="code-tag">JavaScript</span>
+              <span class="code-tag">foobar2000</span>
+              <span class="code-tag">CUI + SMP</span>
+			  <span class="code-tag">Bash</span>
+			  <span class="code-tag"></span>
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="#projects" class="proj-link">Hobby work: no beta releases yet</a>
+          </div>
+        </article>
+
+        <article class="shrine-panel project-card">
+          <div>
+            <div class="project-code">PRJ_02 | Mathematical Framework</div>
+            <h3 class="project-title">Generalised Mathematical Representation for Linear Chemical Balancing</h3>
+            <p class="project-desc">
+                An attempt to unify multiple existing frameworks for Chemical Balancing.
+            </p>
+            <div class="project-tags">
+              <span class="code-tag">LaTeX</span>
+              <span class="code-tag">XeLaTeX</span>
+              <span class="code-tag">PDF</span>
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="https://raw.githubusercontent.com/harvey-owo/hvypublic-asset/refs/heads/main/main2.tex" class="proj-link" download="main2.tex">See raw .tex file</a>
+          </div>
+        </article>
+
+        <article class="shrine-panel project-card">
+          <div>
+            <div class="project-code">PRJ_03 | Active 32-bit Windows Architecture solo research</div>
+            <h3 class="project-title">Native abstraction layers</h3>
+            <p class="project-desc">
+                Even when a client is limited by its engine, one can always try invoking native libraries. Active personal research field for Project Guuji's terminal to work.
+            </p>
+            <div class="project-tags">
+              <span class="code-tag">Windows</span>
+              <span class="code-tag">Research</span>
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="#project-guuji" class="proj-link">Hobby work: see Project Guuji</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-gallery" id="gallery">
+      <div class="gallery-top-bar">
+        <div>
+          <div class="section-kicker">✦ Gallery</div>
+          <h2 class="section-heading" style="margin-bottom: 0;">Documents</h2>
+        </div>
+        <a 
+          href="https://github.com/harvey-owo/shescoolaf/releases/download/PDF/SAMPLE.Generalised.Mathematical.Representation.for.Linear.Chemical.Balancing.by.Harvey.Kent.I.Santos.pdf" 
+          download="research_paper.tex" 
+          class="btn-latex"
+          title="Download Compiled PDF"
+        >
+          <span>📄</span> Download LaTeX (PDF/TeX)
+        </a>
+      </div>
+
+      <div class="gallery-swipe-track">
+
+		<div class="shrine-panel gallery-item">
+			<div class="gallery-img-box">
+				<img class="gallery-img" src="https://raw.githubusercontent.com/harvey-owo/hvypublic-asset/refs/heads/main/88865ff9-7da3-45b3-9bdd-e3d77c650888.jpg" alt="Gallery Image">
+			</div>
+			<div class="gallery-caption-box">
+				<div class="gallery-item-title">Yae Miko</div>
+				<p class="gallery-item-desc">An old artwork as a sample, done with ibisPaintX (Mobile)</p>
+			</div>
+		</div>
+
+        <div class="shrine-panel gallery-item">
+          <div class="gallery-img-box">
+            <img class="gallery-img" src="https://imglink.cc/cdn/CylvMsPsY_.png" alt="Pre-alpha preview" />
+          </div>
+          <div class="gallery-caption-box">
+            <div class="gallery-item-title">Project Guuji pre-alpha preview</div>
+            <p class="gallery-item-desc">Current build: 10262026p3. Best viewed when the image is opened in a new tab.</p>
+          </div>
+        </div>
+
+        <div class="shrine-panel gallery-item">
+          <div class="gallery-img-box">
+            <img class="gallery-img" src="https://imglink.cc/cdn/beFAIVtiTh.png" alt="LaTeX PDF Preview" />
+          </div>
+          <div class="gallery-caption-box">
+            <div class="gallery-item-title">Generalised Mathematical Representation for Linear Chemical Balancing</div>
+            <p class="gallery-item-desc">Preview of the first page rendered using XeLaTeX.</p>
+          </div>
+        </div>
+		
+        <div class="shrine-panel gallery-item">
+          <div class="gallery-img-box">
+            <img class="gallery-img" src="https://github.com/harvey-owo/hvypublic-asset/blob/main/Screenshot%202026-10-25%20213132.png?raw=true" alt="Certificates" />
+          </div>
+          <div class="gallery-caption-box">
+            <div class="gallery-item-title">Available Certificates</div>
+            <p class="gallery-item-desc">Best viewed when the image is opened in a new tab.</p>
+          </div>
+        </div>
+		
+        <div class="shrine-panel gallery-item">
+          <div class="gallery-img-box">
+            <img class="gallery-img" src="https://github.com/harvey-owo/hvypublic-asset/blob/main/Screenshot%202026-10-25%20213216.png?raw=true" alt="Certificates" />
+          </div>
+          <div class="gallery-caption-box">
+            <div class="gallery-item-title">Available Certificates</div>
+            <p class="gallery-item-desc">Best viewed when the image is opened in a new tab.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="shrine-panel gallery-annotation">
+        <p style="font-size: 0.82rem; color: var(--text-body); line-height: 1.7;">
+          <strong>Exhibit Explanation:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Harvey Kent I. Santos • JetBrains Mono</p>
+    </footer>
+
+  </main>
+
+  <div id="toast-msg">🌸 Email copied to clipboard!</div>
+
+  <script>
+	const curtain = document.getElementById('gatekeeper-curtain');
+	const scrollBox = document.getElementById('gatekeeperScroll');
+	const enterBtn = document.getElementById('enterSiteBtn');
+	const scrollNotice = document.getElementById('scrollNotice');
+
+	function checkScrollNeeded() {
+	  if (scrollBox.scrollHeight <= scrollBox.clientHeight) {
+		makeReady();
+	  }
+	}
+
+	function makeReady() {
+	  enterBtn.classList.add('ready');
+	  scrollNotice.textContent = '✓ Ready to enter';
+	  scrollNotice.style.color = 'var(--sakura-pink)';
+	}
+
+	checkScrollNeeded();
+	window.addEventListener('load', checkScrollNeeded);
+
+	scrollBox.addEventListener('scroll', () => {
+	  const atBottom = scrollBox.scrollTop + scrollBox.clientHeight >= scrollBox.scrollHeight - 20;
+	  if (atBottom) {
+		makeReady();
+	  }
+	});
+
+	enterBtn.addEventListener('click', () => {
+	  if (enterBtn.classList.contains('ready')) {
+		curtain.classList.add('hidden');
+	  }
+	});
+
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const root = document.documentElement;
+
+    themeBtn.addEventListener('click', () => {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      root.setAttribute('data-theme', newTheme);
+      themeBtn.innerHTML = newTheme === 'dark' 
+        ? '<span>☼</span> Light' 
+        : '<span>☾</span> Dark';
+    });
+
+    const emailTriggers = document.querySelectorAll('.email-copy-trigger');
+    const toast = document.getElementById('toast-msg');
+    let toastTimer;
+
+    emailTriggers.forEach(el => {
+      el.addEventListener('click', () => {
+        const email = el.getAttribute('data-email') || 'your.email@university.edu';
+        navigator.clipboard.writeText(email).then(() => {
+          toast.textContent = `🌸 Copied: ${email}`;
+          toast.classList.add('show');
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => {
+            toast.classList.remove('show');
+          }, 2600);
+        });
+      });
+    });
+
+    const canvas = document.getElementById('ambient-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = 0, height = 0;
+    let time = 0;
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class FluidWisp {
+      constructor() {
+        this.init();
+      }
+      init() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.radius = Math.random() * 80 + 60;
+        this.alpha = Math.random() * 0.08 + 0.03;
+        this.vx = 0;
+        this.vy = 0;
+        this.isBlush = Math.random() > 0.3;
+      }
+      update() {
+        const angle = Math.sin(this.x * 0.0015 + time * 0.35) * Math.cos(this.y * 0.0015 + time * 0.25) * Math.PI * 2;
+        const targetVx = Math.cos(angle) * 0.3 + 0.12;
+        const targetVy = Math.sin(angle) * 0.25 - 0.2;
+
+        this.vx += (targetVx - this.vx) * 0.03;
+        this.vy += (targetVy - this.vy) * 0.03;
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < -this.radius) this.x = width + this.radius;
+        if (this.x > width + this.radius) this.x = -this.radius;
+        if (this.y < -this.radius) this.y = height + this.radius;
+        if (this.y > height + this.radius) this.y = -this.radius;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalCompositeOperation = root.getAttribute('data-theme') === 'dark' ? 'screen' : 'multiply';
+        const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+        
+        const color = this.isBlush ? '255, 158, 187' : '147, 197, 253';
+        grad.addColorStop(0, `rgba(${color}, ${this.alpha * 1.2})`);
+        grad.addColorStop(0.5, `rgba(${color}, ${this.alpha * 0.5})`);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    const wisps = Array.from({ length: 14 }, () => new FluidWisp());
+
+    function render() {
+      time += 0.007;
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < wisps.length; i++) {
+        wisps[i].update();
+        wisps[i].draw();
+      }
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+  </script>
+</body>
+</html>
